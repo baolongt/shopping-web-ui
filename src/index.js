@@ -1,13 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./pages/App";
-import Header from "./common/components/Header";
+import App from "./pages/app/App";
 import "./css/main.css";
+import { Route, Switch } from "react-router";
+import Admin from "./pages/admin/Admin";
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
 	<React.StrictMode>
-		<Header />
-		<App />
+		<BrowserRouter>
+			<Switch>
+				<Route path="/admin" component={Admin} />
+				<Route path="/" component={App} />
+				<App />
+			</Switch>
+		</BrowserRouter>
 	</React.StrictMode>,
 	document.getElementById("root")
 );
