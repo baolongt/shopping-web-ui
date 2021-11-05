@@ -12,7 +12,6 @@ ReactDOM.render(
 			<Switch>
 				<Route path="/admin" component={Admin} />
 				<Route path="/" component={App} />
-				<App />
 			</Switch>
 		</BrowserRouter>
 	</React.StrictMode>,
