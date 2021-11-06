@@ -18,11 +18,11 @@ const SearchBar = (props) => {
 					page: props.pagination.currentPage
 				}
 			});
-			const data = response.data;
+			const data = response.data.data.content;
 			props.setProductsCallback(data);
 		}
 		search();
-	}, [value, props.offset, props.currentPage]);
+	}, [value, props.offset, props.currentPage, searchValue]);
 	return (
 		<div className="text-gray-500 focus-within:text-gray-700 col-span-4">
 			<svg
@@ -39,7 +39,7 @@ const SearchBar = (props) => {
 			</svg>
 			<input
 				class="py-2 pl-8 placeholder-gray-400  text-black
-					rounded-2xl border-none w-72 focus:outline-none bg-gray-300 bg-opacity-60"
+					rounded-md border-none w-72 focus:outline-none bg-gray-300 bg-opacity-60"
 				id="searchValue"
 				type="text"
 				autoComplete="off"

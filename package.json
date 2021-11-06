@@ -19,8 +19,8 @@
 		"web-vitals": "^1.0.1"
 	},
 	"scripts": {
-		"prod": "set 'REACT_APP_ENV=prod' && npm start",
-		"dev": "set 'REACT_APP_ENV=dev' && npm start",
+		"prod": "set REACT_APP_ENV=prod && npm start",
+		"dev": "set REACT_APP_ENV=dev && npm start",
 		"start": "npm run build:css && react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",

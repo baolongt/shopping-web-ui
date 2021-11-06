@@ -12,10 +12,10 @@ const Admin = () => {
 				<SideBar />
 			</div>
 			<div className="col-span-10">
-				<Route exact path="/admin/dashboard" component={Dashboard} />
-				<Route exact path="/admin/product" component={Product} />
-				<Route exact path="/admin/order" component={Order} />
-				<Route exact path="/admin/account" component={Account} />
+				<Route path="/admin/dashboard" component={Dashboard} />
+				<Route path="/admin/product" component={Product} />
+				<Route path="/admin/order" component={Order} />
+				<Route path="/admin/account" component={Account} />
 			</div>
 		</div>
 	);

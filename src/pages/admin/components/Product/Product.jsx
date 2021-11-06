@@ -1,59 +1,39 @@
-import SearchBar from "./SearchBar";
-import ProductTable from "./ProductTable";
-import { useCallback, useEffect, useState } from "react";
-import axios from "axios";
+import { Link, Route, useLocation } from "react-router-dom";
+import LayoutAddProduct from "./Add/LayoutAddProduct";
+import OverviewProduct from "./Overview/OverviewProduct";
 
 const Product = () => {
-	const [products, setProducts] = useState([]);
-	const [pagination, setPagination] = useState({
-		currentPage: 0,
-		totalPages: 0,
-		offset: 10
-	});
-
-	const setProductsCallback = useCallback((products) => {
-		setProducts(products);
-	}, []);
-
-	useEffect(() => {
-		async function getProduct() {
-			let url =
-				process.env.REACT_APP_ENV.trim() === "dev"
-					? process.env.REACT_APP_BACKEND_API_URL_DEV
-					: "";
-			let response = await axios
-				.get(url + "/product/getAll", {
-					params: {
-						page: pagination.currentPage,
-						offset: pagination.offset
-					}
-				})
-				.catch((e) => {
-					console.error(e);
-				});
-			let data = await response.data.data;
-			let products = await data.content;
-			let totalPages = await data.totalPages;
-			setProducts(products);
-			setPagination({ ...pagination, totalPages });
-		}
-		getProduct();
-	}, [pagination]);
+	const location = useLocation();
+	const path = location.pathname;
 	return (
 		<>
-			<p className="text-xl text-gray-600 font-semibold p-2 ml-5">Products</p>
-			<div className="bg-white mx-5 rounded-2xl">
-				<div className="flex justify-end mt-3">
-					<div className="p-2 pr-20">
-						<SearchBar
-							setProductsCallback={setProductsCallback}
-							pagination={pagination}
-							placeHolder="Search product"
-						/>
-					</div>
+			<p className="text-xl text-gray-800 font-semibold p-2 ml-5">Products</p>
+			<div className="bg-white mx-5 rounded-2xl px-5">
+				<div className="mb-2 flex cursor-pointer text-gray-500 font-semibold">
+					<Link
+						className={`p-2 pb-1 ${
+							path == "/admin/product"
+								? "border-b-2 border-blue-500 text-blue-500"
+								: ""
+						}`}
+						to="/admin/product"
+					>
+						Overview
+					</Link>
+					<Link
+						className={`p-2 pb-1 ${
+							path == "/admin/product/add"
+								? "border-b-2 border-blue-500 text-blue-500"
+								: ""
+						} `}
+						to="/admin/product/add"
+					>
+						Add product
+					</Link>
 				</div>
-				<div className="p-4">
-					<ProductTable products={products} />
+				<div className="">
+					<Route exact path="/admin/product" component={OverviewProduct} />
+					<Route exact path="/admin/product/add" component={LayoutAddProduct} />
 				</div>
 			</div>
 		</>

@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 const ProductTable = (props) => {
 	return (
-		<table className="w-full text-xs">
-			<thead className="border-b-2 text-gray-700 text-opacity-60">
+		<table className="w-full text-sm cursor-default">
+			<thead className="border-b-2 text-gray-700">
 				<tr>
 					<th>Image</th>
 					<th>Name</th>
@@ -19,8 +19,8 @@ const ProductTable = (props) => {
 				{props.products.map((product) => {
 					return (
 						<tr
-							className="text-center text-gray-700 font-medium cursor-default
-                         hover:bg-gray-400 hover:bg-opacity-50"
+							className="text-center text-gray-700 font-medium
+                         hover:bg-gray-200 hover:bg-opacity-50 hover:text-blue-600"
 						>
 							<td className="w-16">
 								<img
