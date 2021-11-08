@@ -1,5 +1,6 @@
 import { Link, Route, useLocation } from "react-router-dom";
 import LayoutAddProduct from "./Add/LayoutAddProduct";
+import LayoutEditProduct from "./Edit/LayoutEditProduct";
 import OverviewProduct from "./Overview/OverviewProduct";
 
 const Product = () => {
@@ -34,6 +35,7 @@ const Product = () => {
 				<div className="">
 					<Route exact path="/admin/product" component={OverviewProduct} />
 					<Route exact path="/admin/product/add" component={LayoutAddProduct} />
+					<Route path="/admin/product/edit" component={LayoutEditProduct} />
 				</div>
 			</div>
 		</>

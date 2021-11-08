@@ -114,6 +114,7 @@ const LayoutAddProduct = () => {
 					rounded-md w-40  focus:outline-none border-2 focus:border-blue-400"
 							onChange={(e) => handleSelectBrandId(e)}
 						>
+							<option value=""></option>
 							{brand.map((b) => {
 								return (
 									<option key={b.id} value={b.id}>
