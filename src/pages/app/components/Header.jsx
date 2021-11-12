@@ -1,25 +1,8 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-const Header = () => {
-	const [category, setCategory] = useState([]);
-	useEffect(() => {
-		const getCategory = async () => {
-			let url =
-				process.env.REACT_APP_ENV.trim() === "dev"
-					? process.env.REACT_APP_BACKEND_API_URL_DEV
-					: "";
-			let getCategoryURL = url + "/category/getAll";
-			let response = await axios.get(getCategoryURL);
-			if (response.data.successCode == "RETRIEVE_CATEGORY_SUCCESS") {
-				setCategory(response.data.data);
-			} else console.error(response.data.errorCode);
-		};
-		getCategory();
-	}, []);
+const Header = (props) => {
 	return (
 		<>
-			<header className="grid grid-cols-12 p-3 pb-0 border-b-2">
+			<header className="grid grid-cols-12 p-3 pb-0 border-b-2 z-50">
 				<div className="col-span-1">My-Wear</div>
 				<div className="col-span-2 flex flex-row font-medium text-gray-600 cursor-pointer">
 					<div className="mx-2">Newest</div>
@@ -62,7 +45,7 @@ const Header = () => {
 				id="Explore"
 				className="absolute w-full p-2 hidden bg-gray-200 flex flex-row justify-center"
 			>
-				{category.map((c) => {
+				{props.category.map((c) => {
 					return (
 						<div key={c.id} className="mx-6">
 							<p className="text-lg font-semibold text-gray-500">{c.name}</p>
