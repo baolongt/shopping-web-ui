@@ -22,7 +22,7 @@ const SearchBar = (props) => {
 			props.setProductsCallback(data);
 		}
 		search();
-	}, [value, props.offset, props.currentPage, searchValue]);
+	}, [value, searchValue]);
 	return (
 		<div className="text-gray-500 focus-within:text-gray-700 col-span-4">
 			<svg

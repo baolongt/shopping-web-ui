@@ -3,6 +3,7 @@ import axios from "axios";
 import _, { bindAll } from "lodash";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
+import ProductDetail from "./ProductDetail";
 
 const EditProduct = () => {
 	const location = useLocation();
@@ -12,11 +13,15 @@ const EditProduct = () => {
 		detail: "",
 		id: "",
 		productDetails: [],
-		categories: []
+		category: {}
 	});
 	const [brand, setBrand] = useState([]);
 	const [category, setCategory] = useState([]);
-	const [parentID, setParentID] = useState(0);
+	const [chooseValue, setChooseValue] = useState({
+		brandID: 0,
+		pcategoryID: 0,
+		subCategoryID: 0
+	});
 	const [subCategory, setSubCategory] = useState([]);
 	let productID = location.pathname.split("/")[4];
 	useEffect(() => {
@@ -47,13 +52,13 @@ const EditProduct = () => {
 					id: id
 				}
 			});
-			let data = await response.data;
-			let brandID = data.data.categories.filter(
-				(c) => c.parentID != null && c.parentID != 1
-			)[0].parentID;
-			setProduct(data.data);
-			setParentID(brandID);
-			console.log(data.data);
+			let data = await response.data.data;
+			setProduct(data);
+			setChooseValue({
+				brandID: data.brandId,
+				pcategoryID: data.category.parentID,
+				subCategoryID: data.category.categoryID
+			});
 			return data;
 		};
 		getProduct(productID);
@@ -68,18 +73,17 @@ const EditProduct = () => {
 			let subCategoryURL = url + "/category/getSubCategory";
 			const subCategory = await axios.get(subCategoryURL, {
 				params: {
-					parentId: parentID
+					parentId: chooseValue.pcategoryID
 				}
 			});
 			setSubCategory(subCategory.data.data);
 		};
-		if (parentID == "") {
+		if (chooseValue.pcategoryID == "") {
 			setSubCategory([]);
 		} else {
 			getSubCategory();
 		}
-	}, [parentID]);
-	product.categories.filter((c) => c.id != null && c.parentID != 1);
+	}, [chooseValue.pcategoryID]);
 	return (
 		<div className="grid grid-cols-12">
 			<div className="col-span-5 col-start-1 flex flex-col">
@@ -96,6 +100,7 @@ const EditProduct = () => {
 						className="placeholder-gray-400 p-2  text-black
 					rounded-md w-72 focus:outline-none border-2 focus:border-blue-400"
 						value={product.name}
+						onChange={(e) => setProduct({ ...product, name: e.target.value })}
 					/>
 				</div>
 				<div className="flex flex-row gap-4">
@@ -109,7 +114,10 @@ const EditProduct = () => {
 						<select
 							className="placeholder-gray-400 p-2  text-black
 					rounded-md w-40  focus:outline-none border-2 focus:border-blue-400"
-							value={product.brand.id}
+							value={chooseValue.brandID}
+							onChange={(e) =>
+								setChooseValue({ ...chooseValue, brandID: e.target.value })
+							}
 						>
 							<option value=""></option>
 							{brand.map((b) => {
@@ -136,20 +144,18 @@ const EditProduct = () => {
 							className="placeholder-gray-400 p-2  text-black
 					rounded-md w-40 focus:outline-none border-2 focus:border-blue-400"
 							onChange={(e) => {
-								setParentID(e.target.value);
+								setChooseValue({ ...chooseValue, pcategoryID: e.target.value });
 							}}
-							value={parentID}
+							value={chooseValue.pcategoryID}
 						>
 							<option value=""></option>
-							{category
-								.filter((c) => c.id != 1)
-								.map((c) => {
-									return (
-										<option key={c.id} value={c.id}>
-											{c.name}
-										</option>
-									);
-								})}
+							{category.map((c) => {
+								return (
+									<option key={c.id} value={c.id}>
+										{c.name}
+									</option>
+								);
+							})}
 						</select>
 					</div>
 					{/* subCategory */}
@@ -164,11 +170,13 @@ const EditProduct = () => {
 							id="subCategory"
 							className="placeholder-gray-400 p-2  text-black
 					rounded-md w-40 focus:outline-none border-2 focus:border-blue-400"
-							value={product.categories
-								.filter((c) => c.parentID != null && c.parentID != 1)
-								.map((c) => {
-									return c != null ? c.id : "";
-								})}
+							value={chooseValue.subCategoryID}
+							onChange={(e) =>
+								setChooseValue({
+									...chooseValue,
+									subCategoryID: e.target.value
+								})
+							}
 						>
 							<option value=""></option>
 							{subCategory.map((c) => {
@@ -192,13 +200,16 @@ const EditProduct = () => {
 						value={product.detail}
 						className="placeholder-gray-400 p-2  text-black
 					rounded-md w-96 4/12 h-40 focus:outline-none border-2 focus:border-blue-400 resize-none"
+						onChange={(e) => setProduct({ ...product, detail: e.target.value })}
 					/>
 				</div>
 			</div>
-			<div className="col-span-3 col-start-6 flex flex-col">
-				<p className="text-gray-400 text-xl font-semibold mb-2 ml-1">
-					Product Details
-				</p>
+			<div className="col-span-8 col-start-6 flex flex-col ml-5">
+				{product.id != "" ? (
+					<ProductDetail product={product} setProduct={setProduct} />
+				) : (
+					""
+				)}
 			</div>
 			<div className="col-span-12 flex flex-row  justify-center">
 				<button className="p-2 bg-blue-500 text-white px-5 rounded-lg mt-3 w-1/12">

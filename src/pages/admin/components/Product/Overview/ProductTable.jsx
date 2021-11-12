@@ -16,9 +16,10 @@ const ProductTable = (props) => {
 				</tr>
 			</thead>
 			<tbody>
-				{props.products.map((product) => {
+				{props.products.map((product, index) => {
 					return (
 						<tr
+							key={index}
 							className="text-center text-gray-700 font-medium
                          hover:bg-gray-200 hover:bg-opacity-50 hover:text-blue-600"
 						>
@@ -34,8 +35,8 @@ const ProductTable = (props) => {
 								/>
 							</td>
 							<td>{product.name}</td>
-							<td>{product.brand.name}</td>
-							<td>{product.categories.map((cate) => cate.name).join(",")}</td>
+							<td>{product.brandName}</td>
+							<td>{product.category.categoryName}</td>
 							<td>
 								{product.productDetails.length > 0
 									? _.sumBy(product.productDetails, (detail) => {
