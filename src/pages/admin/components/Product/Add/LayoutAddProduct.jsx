@@ -10,7 +10,7 @@ const LayoutAddProduct = () => {
 		name: "",
 		brandID: parentID,
 		detail: "",
-		categories: []
+		categoryID: ""
 	});
 
 	useEffect(() => {
@@ -67,18 +67,10 @@ const LayoutAddProduct = () => {
 				? process.env.REACT_APP_BACKEND_API_URL_DEV
 				: "";
 		let addNewProductURL = url + "/product/add";
-		let categories = [];
-		let categoryID = document.getElementById("category").value;
 		let subCategoryID = document.getElementById("subCategory").value;
-		if (categoryID != "") {
-			categories.push(categoryID);
-		}
-		if (subCategoryID != "") {
-			categories.push(subCategoryID);
-		}
 		let response = await axios.post(addNewProductURL, {
 			...newProduct,
-			categories: categories
+			categoryID: subCategoryID
 		});
 		console.log(response.data);
 	};
@@ -143,15 +135,13 @@ const LayoutAddProduct = () => {
 							}}
 						>
 							<option value=""></option>
-							{category
-								.filter((c) => c.id != 1)
-								.map((c) => {
-									return (
-										<option key={c.id} value={c.id}>
-											{c.name}
-										</option>
-									);
-								})}
+							{category.map((c) => {
+								return (
+									<option key={c.id} value={c.id}>
+										{c.name}
+									</option>
+								);
+							})}
 						</select>
 					</div>
 					{/* subCategory */}
@@ -249,15 +239,13 @@ const LayoutAddProduct = () => {
 								}}
 							>
 								<option value=""></option>
-								{category
-									.filter((c) => c.id != 1)
-									.map((c) => {
-										return (
-											<option key={c.id} value={c.id}>
-												{c.name}
-											</option>
-										);
-									})}
+								{category.map((c) => {
+									return (
+										<option key={c.id} value={c.id}>
+											{c.name}
+										</option>
+									);
+								})}
 							</select>
 						</div>
 						<div className="flex flex-col">
@@ -279,6 +267,7 @@ const LayoutAddProduct = () => {
 						<button
 							className="mx-auto mt-3 p-2 rounded-lg text-white 
 						bg-blue-500 hover:bg-blue-600 focus:ring focus:ring-blue-300 self-center"
+							onClick={() => handleAddNewProduct()}
 						>
 							Add
 						</button>

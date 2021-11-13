@@ -5,7 +5,9 @@ const ProductDetail = (props) => {
 	const [currentDetail, setCurerntDetail] = useState(null);
 	useEffect(() => {
 		setDetails([...props.product.productDetails]);
-		setCurerntDetail(props.product.productDetails[0].id);
+		if (props.product.productDetails.length > 0) {
+			setCurerntDetail(props.product.productDetails[0].id);
+		}
 	}, []);
 
 	const getProductById = (id) => {
@@ -17,7 +19,6 @@ const ProductDetail = (props) => {
 	) : (
 		<>
 			<div>
-				<p className="text-gray-800 font-semibold mb-2 ml-1">Products</p>
 				<select
 					className="text-black  p-2
 					rounded-md w-60 focus:outline-none border-2 focus:border-blue-400"

@@ -24,6 +24,21 @@ const EditProduct = () => {
 	});
 	const [subCategory, setSubCategory] = useState([]);
 	let productID = location.pathname.split("/")[4];
+
+	const handleSaveItem = async () => {
+		let url =
+			process.env.REACT_APP_ENV.trim() === "dev"
+				? process.env.REACT_APP_BACKEND_API_URL_DEV
+				: "";
+		let response = await axios
+			.post(url + "/product/edit", {
+				...product
+			})
+			.catch((e) => {
+				console.error(e);
+			});
+	};
+
 	useEffect(() => {
 		const callApi = async () => {
 			let url =
@@ -205,14 +220,22 @@ const EditProduct = () => {
 				</div>
 			</div>
 			<div className="col-span-8 col-start-6 flex flex-col ml-5">
+				<p className="text-gray-800 font-semibold mb-2 ml-1">Products</p>
 				{product.id != "" ? (
 					<ProductDetail product={product} setProduct={setProduct} />
 				) : (
 					""
 				)}
+				<button className="p-2 bg-blue-500 text-white px-5 rounded-lg mt-3 w-3/12">
+					Add more
+				</button>
 			</div>
+
 			<div className="col-span-12 flex flex-row  justify-center">
-				<button className="p-2 bg-blue-500 text-white px-5 rounded-lg mt-3 w-1/12">
+				<button
+					onClick={() => handleSaveItem()}
+					className="p-2 bg-blue-500 text-white px-5 rounded-lg mt-3 w-1/12"
+				>
 					Save
 				</button>
 			</div>

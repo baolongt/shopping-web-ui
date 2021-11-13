@@ -3,8 +3,8 @@ const Header = (props) => {
 	return (
 		<>
 			<header className="grid grid-cols-12 p-3 pb-0 border-b-2 z-50">
-				<div className="col-span-1">My-Wear</div>
-				<div className="col-span-2 flex flex-row font-medium text-gray-600 cursor-pointer">
+				<div className="col-span-1 col-start-2">My-Wear</div>
+				<div className="col-span-2 col-start-4 flex flex-row font-medium text-gray-600 cursor-pointer">
 					<div className="mx-2">Newest</div>
 					<div
 						className="mx-2"
@@ -14,7 +14,7 @@ const Header = (props) => {
 						Explore
 					</div>
 				</div>
-				<div className="col-span-2 text-gray-500 focus-within:text-gray-700 col-start-0">
+				<div className="col-span-2 col-start-7 text-gray-500 focus-within:text-gray-700 col-start-0">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						className="h-5 w-5 absolute ml-3 mt-3 pointer-events-none"
@@ -43,7 +43,7 @@ const Header = (props) => {
 				onMouseOver={() => showExplore()}
 				onMouseLeave={() => hideExplore()}
 				id="Explore"
-				className="absolute w-full p-2 hidden bg-gray-200 flex flex-row justify-center"
+				className="z-50 absolute w-full p-2 hidden bg-gray-200 flex flex-row justify-center"
 			>
 				{props.category.map((c) => {
 					return (

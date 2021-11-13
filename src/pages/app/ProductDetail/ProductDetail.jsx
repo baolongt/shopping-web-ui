@@ -42,7 +42,7 @@ const ProductDetail = (props) => {
 				</div>
 				<div className="grid grid-cols-12">
 					<div className="col-span-4 col-start-4">
-						<div className="w-80">
+						<div className="w-72">
 							<img className="w-full" src={detail.imgURL} alt={detail.id} />
 						</div>
 					</div>

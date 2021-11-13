@@ -7,7 +7,7 @@ const Category = (props) => {
 				return (
 					<div
 						key={index}
-						className="relative overflow-hidden p-3 cursor-pointer"
+						className="z-0 relative overflow-hidden p-3 cursor-pointer"
 					>
 						<div className="h-5 w-full flex items- pl-5">
 							<p className="text-lg font-semibold">{c.name}</p>
