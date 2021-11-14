@@ -43,6 +43,7 @@ const ProductDetail = (props) => {
 						className="placeholder-gray-400 p-2  text-black
 					rounded-md w-40 focus:outline-none border-2 focus:border-blue-400"
 						value={getProductById(currentDetail).price}
+						onChange={(e) => setDetails()}
 					/>
 				</div>
 				<div className="mr-6">

@@ -1,30 +1,10 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Products = (props) => {
-	const [product, setProduct] = useState([]);
-	useEffect(() => {
-		const getProduct = async () => {
-			let url =
-				process.env.REACT_APP_ENV.trim() === "dev"
-					? process.env.REACT_APP_BACKEND_API_URL_DEV
-					: "";
-			let getProductURL = url + "/product/getByCategory";
-			const response = await axios.get(getProductURL, {
-				params: {
-					category: props.category
-				}
-			});
-			const data = await response.data.data.content;
-			setProduct(data);
-		};
-		getProduct();
-	}, []);
 	return (
 		<div>
 			<div class="grid grid-cols-12">
-				{product
+				{props.product
 					.filter((p) => p.productDetails.length != 0)
 					.map((p, index) => {
 						return (
